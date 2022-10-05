@@ -6,6 +6,40 @@ Launch this in Paperspace Gradient by clicking the link below.
 
 [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/gradient-ai/Whisper-AutoCaption/blob/master/whisper-caption.ipynb?machine=Free-GPU)
 
+---
+
+# The `subtitle_video` function
+
+The `subtitle_video` function can be accessed through the whisper-caption.ipynb Notebook. This function uses Whisper and MoviePy to take in a video, extract its audio, convert its speech into text captions, and then add those captions at the correct timeslots back to the original video.
+
+`subtitle_video` takes in the following parameters:
+
+```
+    download:       bool, this tells your function if you are downloading a youtube video
+    url: str,       str, the URL of youtube video to download if download is True
+    aud_opts:       dict, audio file youtube-dl options
+    vid_opts:       dict, video file youtube-dl options
+    model_type:     str, which pretrained model to download. Options are:
+                    ['tiny', 'small', 'base', 'medium','large','tiny.en', 'small.en', 'base.en',  'medium.en']
+                    More details about model_types can be found in table in original repo here:
+                    https://github.com/openai/whisper#Available-models-and-languages
+     name:          str, name of directory to store files in in experiments folder
+     audio_file:    str, path to extracted audio file for Whisper
+     input_file:    str, path to video file for MoviePy to caption
+     output:        str, destination of final output video file
+     uploaded_vid:  str, path to uploaded video file if download is False
+```
+
+---
+
+Future plans:
+
+- Flask application
+- Deployment tutorial for Paperspace Gradient Deployments
+- API version
+
+---
+
 [[Blog]](https://openai.com/blog/whisper)
 [[Paper]](https://cdn.openai.com/papers/whisper.pdf)
 [[Model card]](model-card.md)
