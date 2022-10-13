@@ -177,15 +177,6 @@ def main():
     final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
     final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
 
-        # save vid
-    
-    if args.suffix is not None:
-        save_restore_path = os.path.join(args.output, 'subbed_vids',
-                                            f'{basename}_{args.suffix}.{extension}')
-    else:
-        save_restore_path = os.path.join(args.output, 'subbed_vids', f'{basename}.{extension}')
-    imwrite(restored_img, save_restore_path)
-
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
         onlyfiles.remove('.DS_Store')
