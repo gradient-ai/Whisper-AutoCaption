@@ -180,9 +180,9 @@ def main():
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
         onlyfiles.remove('.DS_Store')
-        return render_template("index2.html", variable = onlyfiles[0])
+        return render_template("index.html", variable = onlyfiles[0])
     except:
-        return render_template("index2.html", variable = onlyfiles[0])
+        return render_template("index.html", variable = onlyfiles[0])
 
 
 
