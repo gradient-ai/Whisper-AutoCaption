@@ -52,8 +52,8 @@ def upload_file():
         os.remove(os.path.join(source, f))
     # for f in os.listdir(destination):
     #     os.remove(os.path.join(destination, f))
-    for f in os.listdir(out):
-        os.remove(os.path.join(out, f))
+    # for f in os.listdir(out):
+        # os.remove(os.path.join(out, f))
     try:
         text1 = request.form.values()
         text1 = list(text1)
@@ -141,45 +141,45 @@ def main():
     # parser.add_argument("--task", type=str, default="transcribe", choices=["transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
 
 
-    my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
-    if len(os.listdir('inputs/audio')) == 0:
-        my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
+    # my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
+    # if len(os.listdir('inputs/audio')) == 0:
+    #     my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
     
 
-    # Instantiate whisper model using model_type variable
-    model = whisper.load_model('base')
+    # # Instantiate whisper model using model_type variable
+    # model = whisper.load_model('base')
     
-    # Get text from speech for subtitles from audio file
-    result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
+    # # Get text from speech for subtitles from audio file
+    # result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
     
-    # create Subtitle dataframe, and save it
-    dict1 = {'start':[], 'end':[], 'text':[]}
-    for i in result['segments']:
-        dict1['start'].append(int(i['start']))
-        dict1['end'].append(int(i['end']))
-        dict1['text'].append(i['text'])
-    df = pd.DataFrame.from_dict(dict1)
-    # df.to_csv(f'experiments/{name}/subs.csv')
-    vidcap = cv2.VideoCapture('inputs/vids/video.mp4')
-    success,image = vidcap.read()
-    height = image.shape[0]
-    width =image.shape[1]
+    # # create Subtitle dataframe, and save it
+    # dict1 = {'start':[], 'end':[], 'text':[]}
+    # for i in result['segments']:
+    #     dict1['start'].append(int(i['start']))
+    #     dict1['end'].append(int(i['end']))
+    #     dict1['text'].append(i['text'])
+    # df = pd.DataFrame.from_dict(dict1)
+    # # df.to_csv(f'experiments/{name}/subs.csv')
+    # vidcap = cv2.VideoCapture('inputs/vids/video.mp4')
+    # success,image = vidcap.read()
+    # height = image.shape[0]
+    # width =image.shape[1]
 
-    # Instantiate MoviePy subtitle generator with TextClip, subtitles, and SubtitlesClip
-    generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/50, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
-    # generator = lambda txt: TextClip(txt, color='white', fontsize=20, font='Georgia-Regular',stroke_width=3, method='caption', align='south', size=video.size)
-    subs = tuple(zip(tuple(zip(df['start'].values, df['end'].values)), df['text'].values))
-    subtitles = SubtitlesClip(subs, generator)
+    # # Instantiate MoviePy subtitle generator with TextClip, subtitles, and SubtitlesClip
+    # generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/50, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
+    # # generator = lambda txt: TextClip(txt, color='white', fontsize=20, font='Georgia-Regular',stroke_width=3, method='caption', align='south', size=video.size)
+    # subs = tuple(zip(tuple(zip(df['start'].values, df['end'].values)), df['text'].values))
+    # subtitles = SubtitlesClip(subs, generator)
     
-    # Ff the file was on youtube, add the captions to the downloaded video
+    # # Ff the file was on youtube, add the captions to the downloaded video
     
-    video = VideoFileClip('inputs/vids/video.mp4')
-    final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
-    final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
+    # video = VideoFileClip('inputs/vids/video.mp4')
+    # final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
+    # final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
 
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
-        onlyfiles.remove('.DS_Store')
+        # onlyfiles.remove('.DS_Store')
         return render_template("index.html", variable = onlyfiles[0])
     except:
         return render_template("index.html", variable = onlyfiles[0])
