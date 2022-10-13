@@ -46,7 +46,7 @@ def upload_file():
     source = 'inputs/vids'
     # destination = 
     out = 'results/subbed_vids/'
-    # opts_aud = {'format': 'mp3/bestaudio/best','keep-video':True, 'output': f'{destination}/audio', 'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]}
+    opts_aud = {'format': 'mp3/bestaudio/best','keep-video':True, 'output': f'inputs/audio', 'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]}
     vid_opts = {'format': 'mp4/bestvideo/best','outtmpl': f'{source}/video.mp4'}
     for f in os.listdir(source):
         os.remove(os.path.join(source, f))
@@ -58,6 +58,8 @@ def upload_file():
         text1 = request.form.values()
         text1 = list(text1)
         with YoutubeDL(vid_opts) as ydl:
+            ydl.download(text1)
+        with YoutubeDL(opts_aud) as ydl:
             ydl.download(text1)
     except:
         None
