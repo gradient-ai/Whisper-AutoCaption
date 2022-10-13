@@ -54,11 +54,13 @@ def upload_file():
     #     os.remove(os.path.join(destination, f))
     for f in os.listdir(out):
         os.remove(os.path.join(out, f))
-    
-    text1 = request.form.values()
-    text1 = list(text1)
-    with YoutubeDL(vid_opts) as ydl:
+    try:
+        text1 = request.form.values()
+        text1 = list(text1)
+        with YoutubeDL(vid_opts) as ydl:
             ydl.download(text1)
+    except:
+        None
     
     if request.method == 'POST':
         # check if the post request has the file part
@@ -125,29 +127,25 @@ def upload_file():
 
 @app.route('/main', methods=['POST','GET'])
 def main():    
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--audio_file", nargs="+", type=str, help="audio file(s) to transcribe")
-    parser.add_argument("--model_type", default="small", choices=['tiny', 'small', 'base', 'medium','large','tiny.en', 'small.en', 'base.en', 'medium.en'], help="name of the Whisper model to use")
-    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu", help="device to use for PyTorch inference")
-    parser.add_argument("--output", "-o", type=str, default=".", help="directory to save the outputs")
-    parser.add_argument("--download", default = True, help="bool, get files")
-    parser.add_argument("--url", default = None, help="youtube file")
-    parser.add_argument("--input_file", default = 'video.mp4', help="bool, get files")
+    # parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    # parser.add_argument("--audio_file", nargs="+", type=str, help="audio file(s) to transcribe")
+    # parser.add_argument("--model_type", default="small", choices=['tiny', 'small', 'base', 'medium','large','tiny.en', 'small.en', 'base.en', 'medium.en'], help="name of the Whisper model to use")
+    # parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu", help="device to use for PyTorch inference")
+    # parser.add_argument("--output", "-o", type=str, default=".", help="directory to save the outputs")
+    # parser.add_argument("--download", default = True, help="bool, get files")
+    # parser.add_argument("--url", default = None, help="youtube file")
+    # parser.add_argument("--input_file", default = 'video.mp4', help="bool, get files")
 
-    parser.add_argument("--task", type=str, default="transcribe", choices=["transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
+    # parser.add_argument("--task", type=str, default="transcribe", choices=["transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
 
-
-    sys.argv = ['--audio_file audio.mp3 --model_type base --input_file inputs/vids/video.mp4 --output results/ --task translate --download True']
-    args = parser.parse_args()
-    print(args)
 
     my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
-    # my_clip.audio.write_audiofile('inputs/audio/audio.mp3',codec="aac")
-    my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
+    if len(os.listdir('inputs/audio')) == 0:
+        my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
     
 
     # Instantiate whisper model using model_type variable
-    model = whisper.load_model(args.model_type)
+    model = whisper.load_model('base')
     
     # Get text from speech for subtitles from audio file
     result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
