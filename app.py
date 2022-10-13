@@ -143,7 +143,7 @@ def main():
 
     my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
     # my_clip.audio.write_audiofile('inputs/audio/audio.mp3',codec="aac")
-    my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libshine")
+    my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
     
 
     # Instantiate whisper model using model_type variable
