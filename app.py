@@ -137,7 +137,7 @@ def main():
     parser.add_argument("--task", type=str, default="transcribe", choices=["transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
 
 
-    sys.argv = ['--audio_file audio.mp3 --model_type base --input_file inputs/vids/video.mp4 --output results/ --task translate']
+    sys.argv = ['--audio_file audio.mp3 --model_type base --input_file inputs/vids/video.mp4 --output results/ --task translate --download True']
     args = parser.parse_args()
     print(args)
 
@@ -172,29 +172,19 @@ def main():
     subtitles = SubtitlesClip(subs, generator)
     
     # Ff the file was on youtube, add the captions to the downloaded video
-    if download:
-        video = VideoFileClip('inputs/vids/video.mp4')
-        final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
-        final.write_videofile(f'results/subbed_vids/{args.output}', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
-    else:
-        # If the file was a local upload:
-        video = VideoFileClip('inputs/vids/video.mp4')
-        final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
-        final.write_videofile(f'results/subbed_vids/{args.output}', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
+    
+    video = VideoFileClip('inputs/vids/video.mp4')
+    final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
+    final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
 
         # save vid
-    if restored_img is not None:
-        if args.ext == 'auto':
-            extension = ext[1:]
-        else:
-            extension = args.ext
-
-        if args.suffix is not None:
-            save_restore_path = os.path.join(args.output, 'subbed_vids',
-                                             f'{basename}_{args.suffix}.{extension}')
-        else:
-            save_restore_path = os.path.join(args.output, 'subbed_vids', f'{basename}.{extension}')
-        imwrite(restored_img, save_restore_path)
+    
+    if args.suffix is not None:
+        save_restore_path = os.path.join(args.output, 'subbed_vids',
+                                            f'{basename}_{args.suffix}.{extension}')
+    else:
+        save_restore_path = os.path.join(args.output, 'subbed_vids', f'{basename}.{extension}')
+    imwrite(restored_img, save_restore_path)
 
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
