@@ -19,16 +19,17 @@ import argparse
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
-from flask import Flask, jsonify, request, render_template, redirect, url_for
+from flask import Flask, jsonify, request, render_template, redirect, url_for, send_from_directory
 
 import sys
 
-
 UPLOAD_FOLDER = 'inputs/vids'
+OUTPUT_FOLDER = 'results/subbed_vids'
 ALLOWED_EXTENSIONS = {'mp4', 'mov', 'webm', 'ts', 'avi', 'y4m', 'mkv'}
 
 app = Flask(__name__,static_folder='results')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 
 @app.route("/", methods = ['GET', 'POST'])
@@ -125,69 +126,63 @@ def upload_file():
     </html>
     '''
 
-@app.route("/play")
+@app.route("/playvideourl/<filename>")
 def playvideourl(filename): 
     return render_template('index.html', 
-        movie_name='inputs/vids/video.mp4',
+        movie_name='video.mp4',
         movie_ext='mp4')
+
+@app.route("/media_video/<filename>")
+def media_video(filename):
+   # config_any_dir
+   return send_from_directory(app.config['OUTPUT_FOLDER'],
+                               filename, as_attachment=True)
 
 @app.route('/main', methods=['POST','GET'])
 def main():    
-    # parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # parser.add_argument("--audio_file", nargs="+", type=str, help="audio file(s) to transcribe")
-    # parser.add_argument("--model_type", default="small", choices=['tiny', 'small', 'base', 'medium','large','tiny.en', 'small.en', 'base.en', 'medium.en'], help="name of the Whisper model to use")
-    # parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu", help="device to use for PyTorch inference")
-    # parser.add_argument("--output", "-o", type=str, default=".", help="directory to save the outputs")
-    # parser.add_argument("--download", default = True, help="bool, get files")
-    # parser.add_argument("--url", default = None, help="youtube file")
-    # parser.add_argument("--input_file", default = 'video.mp4', help="bool, get files")
-
-    # parser.add_argument("--task", type=str, default="transcribe", choices=["transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
-
-
-    # my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
-    # if len(os.listdir('inputs/audio')) == 0:
-    #     my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
+    my_clip = mp.VideoFileClip('inputs/vids/video.mp4')
+    if len(os.listdir('inputs/audio')) == 0:
+        my_clip.audio.write_audiofile('inputs/audio/audio.mp3', codec="libmp3lame")
     
 
-    # # Instantiate whisper model using model_type variable
-    # model = whisper.load_model('base')
+    # Instantiate whisper model using model_type variable
+    model = whisper.load_model('base')
     
-    # # Get text from speech for subtitles from audio file
-    # result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
+    # Get text from speech for subtitles from audio file
+    result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
     
-    # # create Subtitle dataframe, and save it
-    # dict1 = {'start':[], 'end':[], 'text':[]}
-    # for i in result['segments']:
-    #     dict1['start'].append(int(i['start']))
-    #     dict1['end'].append(int(i['end']))
-    #     dict1['text'].append(i['text'])
-    # df = pd.DataFrame.from_dict(dict1)
-    # # df.to_csv(f'experiments/{name}/subs.csv')
-    # vidcap = cv2.VideoCapture('inputs/vids/video.mp4')
-    # success,image = vidcap.read()
-    # height = image.shape[0]
-    # width =image.shape[1]
+    # create Subtitle dataframe, and save it
+    dict1 = {'start':[], 'end':[], 'text':[]}
+    for i in result['segments']:
+        dict1['start'].append(int(i['start']))
+        dict1['end'].append(int(i['end']))
+        dict1['text'].append(i['text'])
+    df = pd.DataFrame.from_dict(dict1)
+    # df.to_csv(f'experiments/{name}/subs.csv')
+    vidcap = cv2.VideoCapture('inputs/vids/video.mp4')
+    success,image = vidcap.read()
+    height = image.shape[0]
+    width =image.shape[1]
 
-    # # Instantiate MoviePy subtitle generator with TextClip, subtitles, and SubtitlesClip
-    # generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/50, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
-    # # generator = lambda txt: TextClip(txt, color='white', fontsize=20, font='Georgia-Regular',stroke_width=3, method='caption', align='south', size=video.size)
-    # subs = tuple(zip(tuple(zip(df['start'].values, df['end'].values)), df['text'].values))
-    # subtitles = SubtitlesClip(subs, generator)
+    # Instantiate MoviePy subtitle generator with TextClip, subtitles, and SubtitlesClip
+    generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/50, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
+    # generator = lambda txt: TextClip(txt, color='white', fontsize=20, font='Georgia-Regular',stroke_width=3, method='caption', align='south', size=video.size)
+    subs = tuple(zip(tuple(zip(df['start'].values, df['end'].values)), df['text'].values))
+    subtitles = SubtitlesClip(subs, generator)
     
-    # # Ff the file was on youtube, add the captions to the downloaded video
+    # Ff the file was on youtube, add the captions to the downloaded video
     
-    # video = VideoFileClip('inputs/vids/video.mp4')
-    # final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
-    # final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
+    video = VideoFileClip('inputs/vids/video.mp4')
+    final = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
+    final.write_videofile(f'results/subbed_vids/video.mp4', fps=video.fps, remove_temp=True, codec="libx264", audio_codec="aac")
 
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
         # onlyfiles.remove('.DS_Store')
-        return playvideourl('inputs/vids/video.mp4')
+        return playvideourl('results/subbed_vids/video.mp4')
         # return render_template("index.html", variable = onlyfiles[0])
     except:
-        return playvideourl('inputs/vids/video.mp4')
+        return playvideourl('results/subbed_vids/video.mp4')
         # return render_template("index.html", variable = onlyfiles[0])
 
 
