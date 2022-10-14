@@ -127,7 +127,7 @@ def upload_file():
 
 @app.route("/play")
 def playvideourl(filename): 
-    return render_template('player-video.html', 
+    return render_template('index.html', 
         movie_name='hello.mp4',
         movie_ext='mp4')
 
