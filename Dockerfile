@@ -21,7 +21,7 @@ RUN apt install imagemagick -y
 RUN sed -i '88d' ~/../etc/ImageMagick-6/policy.xml 
 WORKDIR Whisper-AutoCaption/
 RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption
-RUN pip install -r Whisper-Autocaption/requirements.txt
+RUN pip install -r requirements.txt
 
 
 
