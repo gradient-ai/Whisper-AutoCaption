@@ -125,7 +125,11 @@ def upload_file():
     </html>
     '''
 
-
+@app.route("/play")
+def playvideourl(filename): 
+    return render_template('player-video.html', 
+        movie_name='hello.mp4',
+        movie_ext='mp4')
 
 @app.route('/main', methods=['POST','GET'])
 def main():    
@@ -180,9 +184,11 @@ def main():
     onlyfiles = [f for f in listdir('results/subbed_vids') if isfile(join('results/subbed_vids', f))]
     try:
         # onlyfiles.remove('.DS_Store')
-        return render_template("index.html", variable = onlyfiles[0])
+        return playvideourl(onlyfiles[0])
+        # return render_template("index.html", variable = onlyfiles[0])
     except:
-        return render_template("index.html", variable = onlyfiles[0])
+        return playvideourl(onlyfiles[0])
+        # return render_template("index.html", variable = onlyfiles[0])
 
 
 
