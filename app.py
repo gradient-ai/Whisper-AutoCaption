@@ -113,6 +113,7 @@ def upload_file():
                     <input type=submit value=Upload>
                 </form>
             </div>
+            <br>
             <div>
             <form method="POST">
                 Alternatively, you can also submit any Youtube video using the URL submission box below.
