@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body style="text-align:center;">
-
 <body>
-    <video width="720" height="512" controls>
-        <source src={{ url_for('static', filename="subbed_vids/video.mp4" ) }} type="video/mp4">
+    <script type=text/javascript>
+       const movie_name = {{ movie_name|tojson }};
+    </script>
+    
+    
+    <video id="video" defaultMuted autoplay playsinline controls>
+        <source src="{{ url_for('playvideourl', filename=movie_name) }}" type="video/{{movie_ext}}">
+        Your browser does not support the video tag.
     </video>
 </body>
 
