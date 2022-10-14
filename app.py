@@ -127,7 +127,7 @@ def upload_file():
         <br>
         <br>
         <a href="https://www.paperspace.com/">
-        <img src="templates/logo.png" width=80 height=60 alt="Paperspace logo">
+        <img src="logo.png" width=80 height=60 alt="Paperspace logo">
 
     </body>
 
