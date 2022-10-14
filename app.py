@@ -84,48 +84,54 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'video.mp4'))
             return redirect(url_for('main', name='video.mp4'))
     return '''
-   <!doctype html>
-    <html>
-    <style>
-        #Geek_p {
-            font-size: 30px;
-            color: green;
-        }
-    </style>
+<!doctype html>
+<html>
+<style>
+    #Geek_p {
+        font-size: 30px;
+        color: green;
+    }
+</style>
 
-    <body style="text-align:center;">
+<body style="text-align:center;">
 
-        <h1 style="color:blue;">
-            Whisper AutoCaption
-        </h1>
+    <h1 style="color:blue;">
+        Whisper AutoCaption
+    </h1>
 
-        <body>
-            <div>
-                Use Whisper AutoCaption to automatically subtitle your videos in a variety of languages
-            </div>
-            <div>
-                After you select the video, click submit to run the model and add subtitles. 
-            </div>
-            <br>
-            <div>
-                <form method=post enctype=multipart/form-data>
-                    <input type=file name=file>
-                    <input type=submit value=Upload>
-                </form>
-            </div>
-            <br>
-            <div>
+    <body>
+        <div>
+            Use Whisper AutoCaption to automatically generate translated subtitles for your videos in English from a
+            variety of languages.
+        </div>
+        <div>
+            After you select the video, click submit to run the model and add subtitles.
+        </div>
+        <br>
+        <div>
+            <form method=post enctype=multipart/form-data>
+                <input type=file name=file>
+                <input type=submit value=Upload>
+            </form>
+        </div>
+        <br>
+        <div>
             <form method="POST">
-                Alternatively, you can also submit any Youtube video using the URL submission box below.
+                Alternatively, you can submit any Youtube video using the URL submission box below.
                 <br>
                 <br>
                 <input name="text">
                 <input type="submit">
             </form>
-            </div>
-        </body>
-    </html>
-    '''
+        </div>
+        <br>
+        <br>
+        <img src="logo.png" width=80 height=60 alt="Paperspace logo">
+
+    </body>
+
+</html>
+'''
 
 @app.route("/playvideourl/<filename>")
 def playvideourl(filename): 
