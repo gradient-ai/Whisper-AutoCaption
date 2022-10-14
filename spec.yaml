@@ -1,15 +1,5 @@
-image: paperspace/gradient-base:pt112-tf29-jax0314-py39-20220803
+image: jameshskelton/whisper-autocaption:v1.0
 port: 5000
-command:
-  - python
-  - /opt/repositories/Whisper-AutoCaption/app.py
-repositories:
-  dataset: ds0eg66n65f28sc
-  mountPath: opt/repositories
-  repositories:
-    - url: https://github.com/gradient-ai/Whisper-AutoCaption.git
-      name: Whisper-AutoCaption
-      ref: main
 resources:
   replicas: 1
-  instanceType: A6000
+  instanceType: RTX4000
