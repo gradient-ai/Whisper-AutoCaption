@@ -45,16 +45,16 @@ def upload_file():
 
     # print(request.args.get('key', ''))
     source = 'inputs/vids'
-    # destination = 
+    audio = 'inputs/audio'
     out = 'results/subbed_vids/'
     opts_aud = {'format': 'mp3/bestaudio/best','keep-video':True, 'outtmpl': f'inputs/audio/audio.mp3', 'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]}
     vid_opts = {'format': 'mp4/bestvideo/best','outtmpl': f'{source}/video.mp4'}
     for f in os.listdir(source):
         os.remove(os.path.join(source, f))
-    # for f in os.listdir(destination):
-    #     os.remove(os.path.join(destination, f))
-    # for f in os.listdir(out):
-        # os.remove(os.path.join(out, f))
+    for f in os.listdir(audio):
+        os.remove(os.path.join(audio, f))
+    for f in os.listdir(out):
+        os.remove(os.path.join(out, f))
     try:
         text1 = request.form.values()
         text1 = list(text1)
@@ -116,9 +116,9 @@ def upload_file():
             <div>
             <form method="POST">
                 Alternatively, you can also submit any Youtube video using the URL submission box below.
+                <br>
+                <br>
                 <input name="text">
-                <br>
-                <br>
                 <input type="submit">
             </form>
             </div>
