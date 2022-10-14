@@ -154,7 +154,7 @@ def main():
     
 
     # Instantiate whisper model using model_type variable
-    model = whisper.load_model('base')
+    model = whisper.load_model('medium')
     
     # Get text from speech for subtitles from audio file
     result = model.transcribe(f'inputs/audio/audio.mp3', task = 'translate')
