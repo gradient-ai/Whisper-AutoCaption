@@ -4,6 +4,8 @@ This repo shows how to translate and automatically caption videos using Whisper 
 
 Launch this in Paperspace Gradient by clicking the link below.
 
+## Launch Notebook
+
 [![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/gradient-ai/Whisper-AutoCaption/blob/master/whisper-caption.ipynb?machine=Free-GPU)
 
 ---
@@ -32,10 +34,24 @@ The `subtitle_video` function can be accessed through the whisper-caption.ipynb 
 
 ---
 
+# The Whisper AutoCaption Flask application
+
+To deploy Whisper AutoCaption in the Flask web application, go to Gradient Deployments, and create a new deployment. Then fill in the values, and create the deployment. From there, all you need to do is click the API endpoint URL in the Deployment's details page.
+
+From there, you can directly input any video from your local computer or Youtube URL.
+
+'''
+image: jameshskelton/whisper-autocaption:v1.0
+port: 5000
+resources:
+replicas: 1
+instanceType: RTX4000
+'''
+
+---
+
 Future plans:
 
-- Flask application
-- Deployment tutorial for Paperspace Gradient Deployments
 - API version
 
 ---
