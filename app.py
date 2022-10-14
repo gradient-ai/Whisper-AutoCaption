@@ -166,7 +166,7 @@ def main():
     width =image.shape[1]
 
     # Instantiate MoviePy subtitle generator with TextClip, subtitles, and SubtitlesClip
-    generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/50, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
+    generator = lambda txt: TextClip(txt, font='P052-Bold', fontsize=width/20, stroke_width=.7, color='white', stroke_color = 'black', size = (width, height*.25), method='caption')
     # generator = lambda txt: TextClip(txt, color='white', fontsize=20, font='Georgia-Regular',stroke_width=3, method='caption', align='south', size=video.size)
     subs = tuple(zip(tuple(zip(df['start'].values, df['end'].values)), df['text'].values))
     subtitles = SubtitlesClip(subs, generator)
