@@ -25,11 +25,13 @@ import sys
 
 UPLOAD_FOLDER = 'inputs/vids'
 OUTPUT_FOLDER = 'results/subbed_vids'
+
 ALLOWED_EXTENSIONS = {'mp4', 'mov', 'webm', 'ts', 'avi', 'y4m', 'mkv'}
 
 app = Flask(__name__,static_folder='results')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+
 
 
 @app.route("/", methods = ['GET', 'POST'])
@@ -42,7 +44,6 @@ def allowed_file(filename):
 
 @app.route("/upload", methods = ['GET', 'POST'])
 def upload_file():
-
     # print(request.args.get('key', ''))
     source = 'inputs/vids'
     audio = 'inputs/audio'
@@ -127,8 +128,7 @@ def upload_file():
         <br>
         <br>
         <a href="https://www.paperspace.com/">
-        <img src="logo.png" width=80 height=60 alt="Paperspace logo">
-
+        <img src="https://d25hn4jiqx5f7l.cloudfront.net/companies/logos/thumb/paperspace_1536862891.png?1536862891" width=80 height=60 alt="Paperspace logo">
     </body>
 
 </html>
