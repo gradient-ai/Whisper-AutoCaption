@@ -19,7 +19,7 @@ RUN pip install pandas
 RUN pip install moviepy --upgrade 
 RUN apt install imagemagick -y 
 RUN sed -i '88d' ~/../etc/ImageMagick-6/policy.xml 
-RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption --no-cache
+RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption
 WORKDIR Whisper-AutoCaption/
 RUN pip install -r requirements.txt
 RUN pip install -U yt-dlp
