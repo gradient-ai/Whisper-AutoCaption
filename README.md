@@ -41,7 +41,7 @@ To deploy Whisper AutoCaption in the Flask web application, go to Gradient Deplo
 From there, you can directly input any video from your local computer or Youtube URL.
 
 ```
-image: paperspace/whisper-autocaption:v1.0
+image: paperspace/whisper-autocaption:v1.01
 port: 5000
 resources:
 replicas: 1
@@ -52,7 +52,7 @@ The full spec is as follows:
 
 ```
 enabled: true
-image: paperspace/whisper-autocaption:v1.0
+image: paperspace/whisper-autocaption:v1.01
 port: 5000
 resources:
   replicas: 1
