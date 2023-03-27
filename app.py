@@ -48,7 +48,7 @@ def upload_file():
     source = 'inputs/vids'
     audio = 'inputs/audio'
     out = 'results/subbed_vids/'
-    opts_aud = {'format': 'mp3/bestaudio/best','keep-video':True, 'outtmpl': f'inputs/audio/audio.mp3', 'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3'}]}
+    opts_aud = {'format': 'mp3/bestaudio/best','keep-video':True, 'outtmpl': f'inputs/audio/audio.mp3'}
     vid_opts = {'format': 'mp4/bestvideo/best','outtmpl': f'{source}/video.mp4'}
     for f in os.listdir(source):
         os.remove(os.path.join(source, f))

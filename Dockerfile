@@ -15,14 +15,14 @@ RUN pip install opencv-python-headless
 RUN pip install ffmpeg-python
 RUN apt install ffmpeg -y
 RUN pip install git+https://github.com/openai/whisper.git 
-RUN pip install yt-dlp pandas
+RUN pip install pandas
 RUN pip install moviepy --upgrade 
 RUN apt install imagemagick -y 
 RUN sed -i '88d' ~/../etc/ImageMagick-6/policy.xml 
-RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption
+RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption --no-cache
 WORKDIR Whisper-AutoCaption/
 RUN pip install -r requirements.txt
-
+RUN pip install -U yt-dlp
 
 
 EXPOSE 5000
