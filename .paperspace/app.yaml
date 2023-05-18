@@ -1,0 +1,24 @@
+apiVersion: latest
+enabled: true
+name: gradient-ai/Whisper-AutoCaption
+image: ghcr.io/gradient-ai/Whisper-AutoCaption:latest
+port: 8008
+healthChecks:
+  readiness:
+    path: /
+resources:
+  replicas: 1
+  instanceType: P6000
+  autoscaling:
+    enabled: true
+    maxReplicas: 2
+    metrics:
+      - metric: requestDuration
+        summary: average
+        value: 0.15
+      - metric: cpu
+        summary: average
+        value: 30
+      - metric: memory
+        summary: average
+        value: 45
