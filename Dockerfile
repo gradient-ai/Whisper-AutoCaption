@@ -24,6 +24,8 @@ WORKDIR Whisper-AutoCaption/
 RUN pip install -r requirements.txt
 RUN pip install -U yt-dlp
 RUN ls
+RUN ls ..
+RUN ls ../..
 
 EXPOSE 5000
 CMD python app.py
