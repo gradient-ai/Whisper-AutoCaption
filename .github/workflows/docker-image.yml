@@ -83,5 +83,5 @@ jobs:
           CONTAINER_SHA: ${{ steps.set-container-sha.outputs.CONTAINER_SHA }}
         with:
           projectId: pioiimjvdsx
-          configPath: ../.paperspace/app.yaml
+          configPath: ../../.paperspace/app.yaml
           image: ghcr.io/${{ github.repository }}:latest@${{ steps.build-push.outputs.digest }}
