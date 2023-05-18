@@ -78,6 +78,7 @@ jobs:
       - uses: paperspace/deploy-action@v1.2
         name: Deploy to Paperspace
         id: deploy
+        configPath: /Whisper-AutoCaption/.paperspace/app.yaml
         env:
           PAPERSPACE_API_KEY: 05a580ce02c1b4b40b081cc9f6e028
           CONTAINER_SHA: ${{ steps.set-container-sha.outputs.CONTAINER_SHA }}
