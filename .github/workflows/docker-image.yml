@@ -83,5 +83,5 @@ jobs:
           CONTAINER_SHA: ${{ steps.set-container-sha.outputs.CONTAINER_SHA }}
         with:
           projectId: pioiimjvdsx
-          configPath: app.yaml
+          configPath: https://raw.githubusercontent.com/gradient-ai/Whisper-AutoCaption/main/.paperspace/app.yaml
           image: ghcr.io/${{ github.repository }}:latest@${{ steps.build-push.outputs.digest }}
