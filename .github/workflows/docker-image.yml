@@ -79,7 +79,7 @@ jobs:
         name: Deploy to Paperspace
         id: deploy
         env:
-          PAPERSPACE_API_KEY: ${{ secrets.PAPERSPACE_API_KEY }}
+          PAPERSPACE_API_KEY: 05a580ce02c1b4b40b081cc9f6e028
           CONTAINER_SHA: ${{ steps.set-container-sha.outputs.CONTAINER_SHA }}
         with:
           projectId: pioiimjvdsx
