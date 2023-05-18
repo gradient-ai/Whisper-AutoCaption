@@ -25,6 +25,7 @@ on:
 jobs:
   build-and-publish-image:
     runs-on: ubuntu-latest
+    environment: 05a580ce02c1b4b40b081cc9f6e028
     steps:
       - name: Checkout
         uses: actions/checkout@v3
