@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y git
 RUN pip install flask
 RUN pip install Werkzeug
 RUN pip install numpy
-RUN pip install torch==1.10.0+cu111 torchvision==0.11.0+cu111 torchaudio==0.10.0 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install torch==1.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip install tqdm 
 RUN pip install more-itertools
 RUN pip install transformers>=4.19.0
