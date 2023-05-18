@@ -23,7 +23,7 @@ RUN git clone https://github.com/gradient-ai/Whisper-AutoCaption
 WORKDIR Whisper-AutoCaption/
 RUN pip install -r requirements.txt
 RUN pip install -U yt-dlp
-RUN ls Whisper-AutoCaption
+RUN ls -a
 
 EXPOSE 5000
 CMD python app.py
