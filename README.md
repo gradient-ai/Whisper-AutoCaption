@@ -6,7 +6,7 @@ Launch this in Paperspace Gradient by clicking the link below.
 
 ## Launch Notebook
 
-[![Gradient](https://assets.paperspace.io/img/gradient-badge.svg)](https://console.paperspace.com/github/gradient-ai/Whisper-AutoCaption/blob/master/whisper-caption.ipynb?machine=Free-GPU)
+[![Gradient](https://console.paperspace.com/github/gradient-ai/distil-whisper?machine=Free-GPU&ref=blog.paperspace.com)
 
 ---
 
